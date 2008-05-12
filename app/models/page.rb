@@ -1,5 +1,5 @@
 class Page < ActiveRecord::Base
-  has_many :taggings, :dependent => :nullify
+  has_many :taggings, :dependent => :destroy
   has_many :tags, :through => :taggings, :uniq => true
 
   def tag_list
@@ -19,9 +19,11 @@ class Page < ActiveRecord::Base
   end
 
   def create_taggings(tag_string)
+    self.tags.delete(self.tags)
+    self.tags.reset
     tag_string.split(',').each do |t|
       tag = Tag.find_or_create_by_name(t.strip)
-      self.tags << tag unless self.tags.any? { |existing_tag| existing_tag == tag }
+      self.tags << tag 
     end
   end
 
