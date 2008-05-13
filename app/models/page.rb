@@ -2,6 +2,9 @@ class Page < ActiveRecord::Base
   has_many :taggings, :dependent => :destroy
   has_many :tags, :through => :taggings, :uniq => true
 
+  validates_presence_of :title, :message => 'is required'
+  validates_presence_of :body,  :message => 'is required'
+
   def tag_list
     self.tags.map{|t| t.name}.join(", ")
   end

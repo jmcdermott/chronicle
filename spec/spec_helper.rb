@@ -37,3 +37,12 @@ Spec::Runner.configure do |config|
   # config.mock_with :flexmock
   # config.mock_with :rr
 end
+
+module PageSpecHelper
+  def valid_page_attributes
+    {
+      :body   => 'My Body',
+      :title  => 'My Title'
+    }
+  end
+end
